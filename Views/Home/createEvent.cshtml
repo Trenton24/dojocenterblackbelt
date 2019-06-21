@@ -1,0 +1,22 @@
+@using exam.Models
+@model Event
+<h1>Plan Your Activity</h1>
+<a class="btn btn-primary" href="/result">Dashboard</a> <a class="btn btn-primary" href="logout">Log Out</a>
+<form asp-action="CreateEvent" asp-controller="Home" method="post">
+    <span asp-validation-for="Name"></span>
+    <p>Title <input asp-for="Name"></p>
+    <span asp-validation-for="Duration"></span>
+    <p>Duration <input asp-for="Duration"></p>
+    <select asp-for="Time">
+        <option value="Minutes">Minutes</option>
+        <option value="Hours">Hours</option>
+        <option value="Days">Days</option>
+    </select>
+    <span asp-validation-for="Date"></span>
+    <p>Date & Time <input asp-for="Date"></p>
+    <span asp-validation-for="Description"></span>
+    <p>Description <input asp-for="Description"></p>
+    <span asp-validation-for="UserId"></span>
+    <input type='hidden' asp-for="UserId" value="@ViewBag.id">
+    <input class="btn btn-primary" value="Create" type='submit'>
+</form>

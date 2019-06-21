@@ -1,0 +1,36 @@
+@model Event
+<h1>@Model.Name</h1>
+<h2>Event Coordinator: @Model.Planner.FirstName</h2>
+<a class="btn btn-primary" href="/result">Dashboard</a>
+<a class="btn btn-primary" href="/logout">Log Out</a>
+@{
+    bool rsvp = false;
+    if(@Model.UserId == ViewBag.UserId)
+    {
+        <td><a class="btn btn-primary" href="/delete/@Model.EventId">Delete</a></td>
+    }
+    else
+    {
+        @foreach(RSVP r in @Model.Attending)
+        {
+            if(ViewBag.UserId == @r.UserId)
+            {
+                rsvp = true;
+                <td><a class="btn btn-primary" href="/unrsvpEvent/@Model.EventId">Leave</a></td>
+            }
+        }
+        if(!rsvp)
+        {
+            <td><a class="btn btn-primary" href="/rsvpEvent/@Model.EventId">Join</a></td>
+        }
+        
+    }
+}
+@{
+    <h2>Description: @Model.Description</h2>
+    <h4>Participants:</h4>
+    foreach(var t in @Model.Attending)
+    {
+        <h5>@t.Users.FirstName</h5>
+    }
+}

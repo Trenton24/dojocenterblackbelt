@@ -1,0 +1,55 @@
+@model List<Event>
+<body>
+    <h1>Dojo Activity Center</h1>
+    <a class="btn btn-primary" href="/logout">Log Out</a>
+    <table class="table table-dark">
+        <tr>
+            <td scope="col">Activity</td>
+            <td scope="col">Date and Time</td>
+            <td scope="col">Duration</td>
+            <td scope="col">Event Coordinator</td>
+            <td scope="col">No. of Participants</td>
+            <td scope="col">Actions</td>
+        </tr>
+            @{
+            foreach(Event a in @Model)
+            {
+                var eventdate = @a.Date;
+                var formatteddate = string.Format("{0:M/dd @ hh:mm tt}", eventdate);
+                <tr scope="row">
+                    <td scope="col"><a href="/event/@a.EventId">@a.Name</a></td>
+                    <td scope="col">@formatteddate</td>
+                    <td scope="col">@a.Duration @a.Time</td>
+                    <td scope="col">@a.Planner.FirstName</td>
+                    <td scope="col">@a.Attending.Count</td>
+                    
+                    @{
+                        bool rsvp = false;
+                        if(@a.UserId == ViewBag.UserId)
+                        {
+                            <td scope="col"><a class="btn btn-primary" href="/delete/@a.EventId">Delete</a></td>
+                        }
+                        else
+                        {
+                            @foreach(RSVP r in a.Attending)
+                            {
+                                if(ViewBag.UserId == r.UserId)
+                                {
+                                    rsvp = true;
+                                    <td scope="col"><a class="btn btn-primary" href="/unrsvpEvent/@a.EventId">Leave</a></td>
+                                }
+                               
+                            }
+                            if(!rsvp)
+                                {
+                                    <td scope="col"><a class="btn btn-primary" href="/rsvpEvent/@a.EventId">Join</a></td>
+                                }
+                        }
+                    }
+                    
+                </tr>
+            }
+            }
+    </table>
+    <a class="btn btn-primary" href="newEvent">Add New Activity</a>
+</body>

@@ -1,0 +1,11 @@
+@using exam.Models
+@model Users
+<h1>Welcome to the Dojo Activity Center</h1>
+<h3><a class="btn btn-primary" href="/">Register</a></h3>
+<form asp-action="login" asp-controller="Home" method="post">
+    <span asp-validation-for="Email"></span>
+    <p>Email: <input type="email" asp-for="Email"></p>
+    <span asp-validation-for="Password"></span>
+    <p>Password <input type="password" asp-for="Password"></p>
+    <input class="btn btn-primary" type='submit' value="Login">
+</form>
